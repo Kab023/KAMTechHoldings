@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base target="_self">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>NexusTech | Software Development & Automation Solutions</title>
+    
+    <meta name="description" content="Professional software development, automation, and web development services with cutting-edge 3D technology solutions">
+    <meta name="keywords" content="software development, automation, web development, 3D solutions, custom software">
+    <meta name="theme-color" content="#0f172a">
+    <!-- <link rel="icon" href="/favicon.svg" type="image/svg+xml"> -->
+    <link rel="manifest" href="/manifest.json">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" async defer></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#2563eb",
+                        secondary: "#7c3aed",
+                        accent: "#06b6d4",
+                        dark: "#0f172a",
+                        light: "#f8fafc"
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'spin-slow': 'spin 8s linear infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+        .transform-style-3d {
+            transform-style: preserve-3d;
+        }
+        .backface-hidden {
+            backface-visibility: hidden;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #06b6d4 0%, #7c3aed 50%, #2563eb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        input:invalid:not(:placeholder-shown),
+        select:invalid:not(:placeholder-shown),
+        textarea:invalid:not(:placeholder-shown) {
+            border-color: #ef4444;
+        }
+    </style>
+</head>
+<body class="min-h-screen gradient-bg text-white overflow-x-hidden">
+    <!-- 3D Background Canvas -->
+    <div id="threejs-container" class="fixed inset-0 -z-10 opacity-30"></div>
+
+    <!-- Navigation -->
+    <header class="glass-effect sticky top-0 z-50">
+        <nav class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-gradient-to-r from-accent to-primary rounded-lg flex items-center justify-center transform rotate-45">
+                        <span class="transform -rotate-45 font-bold text-xl">N</span>
+                    </div>
+                    <span class="text-2xl font-bold">Nexus<span class="text-gradient">Tech</span></span>
+                </div>
+                
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="hover:text-accent transition-colors duration-300">Home</a>
+                    <a href="#services" class="hover:text-accent transition-colors duration-300">Services</a>
+                    <a href="#portfolio" class="hover:text-accent transition-colors duration-300">Portfolio</a>
+                    <a href="#about" class="hover:text-accent transition-colors duration-300">About</a>
+                    <a href="#contact" class="hover:text-accent transition-colors duration-300">Contact</a>
+                </div>
+                
+                <button class="bg-primary hover:bg-accent px-6 py-2 rounded-lg transition-all duration-300 transform hover:scale-105">
+                    Get Started
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <main>
+        <section id="home" class="container mx-auto px-4 py-20">
+            <div class="flex flex-col lg:flex-row items-center justify-between">
+                <div class="lg:w-1/2 mb-12 lg:mb-0">
+                    <h1 class="text-5xl lg:text-7xl font-bold mb-6">
+                        Building <span class="text-gradient">Digital</span> 
+                        <span class="block">Futures in 3D</span>
+                    </h1>
+                    <p class="text-xl text-gray-300 mb-8">
+                        We create cutting-edge software solutions, automation systems, and immersive web experiences that transform businesses and drive innovation.
+                    </p>
+                    <div class="flex space-x-4">
+                        <button class="bg-primary hover:bg-accent px-8 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-primary/30">
+                            Start Project
+                        </button>
+                        <button class="glass-effect hover:bg-white/20 px-8 py-3 rounded-lg font-semibold transition-all duration-300">
+                            View Portfolio
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/2 perspective-1000">
+                    <div class="relative">
+                        <!-- 3D Cube -->
+                        <div class="w-64 h-64 mx-auto transform-style-3d animate-spin-slow">
+                            <div class="absolute w-full h-full transform rotate-y-0 translate-z-32 bg-gradient-to-r from-primary/30 to-accent/30 rounded-lg"></div>
+                            <div class="absolute w-full h-full transform rotate-y-90 translate-z-32 bg-gradient-to-r from-secondary/30 to-primary/30 rounded-lg"></div>
+                            <div class="absolute w-full h-full transform rotate-y-180 translate-z-32 bg-gradient-to-r from-accent/30 to-secondary/30 rounded-lg"></div>
+                            <div class="absolute w-full h-full transform rotate-y-270 translate-z-32 bg-gradient-to-r from-primary/30 to-accent/30 rounded-lg"></div>
+                            <div class="absolute w-full h-full transform rotate-x-90 translate-z-32 bg-gradient-to-r from-secondary/30 to-primary/30 rounded-lg"></div>
+                            <div class="absolute w-full h-full transform -rotate-x-90 translate-z-32 bg-gradient-to-r from-accent/30 to-secondary/30 rounded-lg"></div>
+                        </div>
+                        
+                        <!-- Floating Elements -->
+                        <div class="absolute -top-4 -left-4 w-20 h-20 bg-primary/20 rounded-full animate-float"></div>
+                        <div class="absolute -bottom-4 -right-4 w-16 h-16 bg-accent/20 rounded-full animate-float" style="animation-delay: 2s;"></div>
+                        <div class="absolute top-1/2 -right-8 w-12 h-12 bg-secondary/20 rounded-full animate-float" style="animation-delay: 4s;"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="py-20">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl font-bold text-center mb-4">Our <span class="text-gradient">Services</span></h2>
+                <p class="text-gray-300 text-center mb-12 max-w-2xl mx-auto">
+                    We offer comprehensive digital solutions tailored to your business needs
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Service 1 -->
+                    <div class="glass-effect rounded-xl p-8 transform hover:-translate-y-2 transition-all duration-500 hover:shadow-xl hover:shadow-primary/20">
+                        <div class="w-16 h-16 bg-gradient-to-r from-primary to-accent rounded-lg flex items-center justify-center mb-6">
+                            <i class="fas fa-code text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4">Software Development</h3>
+                        <p class="text-gray-300 mb-4">
+                            Custom software solutions built with modern technologies and best practices.
+                        </p>
+                        <ul class="space-y-2">
+                            <li class="flex items-center"><i class="fas fa-check text-accent mr-2"></i> Web Applications</li>
+                            <li class="flex items-center"><i class="fas fa-check text-accent mr-2"></i> Mobile Apps</li>
+                            <li class="flex items-center"><i class="fas fa-check text-accent mr-2"></i> Enterprise Solutions</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Service 2 -->
+                    <div class="glass-effect rounded-xl p-8 transform hover:-translate-y-2 transition-all duration-500 hover:shadow-xl hover:shadow-secondary/20">
+                        <div class="w-16 h-16 bg-gradient-to-r from-secondary to-primary rounded-lg flex items-center justify-center mb-6">
+                            <i class="fas fa-robot text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4">Automation</h3>
+                        <p class="text-gray-300 mb-4">
+                            Streamline your operations with intelligent automation systems.
+                        </p>
+                        <ul class="space-y-2">
+                            <li class="flex items-center"><i class="fas fa-check text-accent mr-2"></i> Process Automation</li>
+                            <li class="flex items-center"><i class="fas fa-check text-accent mr-2"></i> AI Integration</li>
+                            <li class="flex items-center"><i class="fas fa-check text-accent mr-2"></i> Workflow Optimization</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Service 3 -->
+                    <div class="glass-effect rounded-xl p-8 transform hover:-translate-y-2 transition-all duration-500 hover:shadow-xl hover:shadow-accent/20">
+                        <div class="w-16 h-16 bg-gradient-to-r from-accent to-secondary rounded-lg flex items-center justify-center mb-6">
+                            <i class="fas fa-globe text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4">Web Development</h3>
+                        <p class="text-gray-300 mb-4">
+                            Modern, responsive websites with cutting-edge 3D and interactive features.
+                        </p>
+                        <ul class="space-y-2">
+                            <li class="flex items-center"><i class="fas fa-check text-accent mr-2"></i> 3D Websites</li>
+                            <li class="flex items-center"><i class="fas fa-check text-accent mr-2"></i> E-commerce</li>
+                            <li class="flex items-center"><i class="fas fa-check text-accent mr-2"></i> Progressive Web Apps</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio Section -->
+        <section id="portfolio" class="py-20">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl font-bold text-center mb-4">Featured <span class="text-gradient">Projects</span></h2>
+                <p class="text-gray-300 text-center mb-12 max-w-2xl mx-auto">
+                    Explore our innovative solutions that have transformed businesses
+                </p>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Project 1 -->
+                    <div class="glass-effect rounded-xl overflow-hidden transform hover:scale-[1.02] transition-all duration-500">
+                        <div class="relative h-64 overflow-hidden">
+                            <img 
+                                src="https://picsum.photos/800/400?random=1" 
+                                alt="Enterprise Automation Dashboard" 
+                                class="w-full h-full object-cover"
+                                loading="lazy"
+                            />
+                            <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent"></div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold mb-2">Enterprise Automation Suite</h3>
+                            <p class="text-gray-300 mb-4">Complete automation solution for manufacturing processes</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-primary/20 rounded-full text-sm">Automation</span>
+                                <span class="px-3 py-1 bg-secondary/20 rounded-full text-sm">AI</span>
+                                <span class="px-3 py-1 bg-accent/20 rounded-full text-sm">Dashboard</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 2 -->
+                    <div class="glass-effect rounded-xl overflow-hidden transform hover:scale-[1.02] transition-all duration-500">
+                        <div class="relative h-64 overflow-hidden">
+                            <img 
+                                src="https://picsum.photos/800/400?random=2" 
+                                alt="3D E-commerce Platform" 
+                                class="w-full h-full object-cover"
+                                loading="lazy"
+                            />
+                            <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent"></div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold mb-2">3D E-commerce Platform</h3>
+                            <p class="text-gray-300 mb-4">Immersive shopping experience with 3D product visualization</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-primary/20 rounded-full text-sm">3D</span>
+                                <span class="px-3 py-1 bg-secondary/20 rounded-full text-sm">E-commerce</span>
+                                <span class="px-3 py-1 bg-accent/20 rounded-full text-sm">WebGL</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-20">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-col lg:flex-row items-center gap-12">
+                    <div class="lg:w-1/2">
+                        <h2 class="text-4xl font-bold mb-6">Why Choose <span class="text-gradient">NexusTech</span></h2>
+                        <p class="text-gray-300 mb-6">
+                            With over a decade of experience in digital transformation, we combine technical expertise with creative innovation to deliver exceptional results.
+                        </p>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mr-4">
+                                    <i class="fas fa-bolt text-accent"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold mb-2">Fast Delivery</h4>
+                                    <p class="text-gray-300">Agile development process ensuring timely delivery</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 bg-secondary/20 rounded-lg flex items-center justify-center mr-4">
+                                    <i class="fas fa-shield-alt text-accent"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold mb-2">Quality Assurance</h4>
+                                    <p class="text-gray-300">Rigorous testing and quality control processes</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 bg-accent/20 rounded-lg flex items-center justify-center mr-4">
+                                    <i class="fas fa-headset text-accent"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold mb-2">24/7 Support</h4>
+                                    <p class="text-gray-300">Round-the-clock technical support and maintenance</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="lg:w-1/2">
+                        <div class="relative">
+                            <div class="glass-effect rounded-xl p-8 transform rotate-3">
+                                <div class="text-center">
+                                    <div class="text-6xl font-bold text-gradient mb-4">98%</div>
+                                    <p class="text-xl font-semibold">Client Satisfaction Rate</p>
+                                </div>
+                            </div>
+                            <div class="glass-effect rounded-xl p-8 absolute -bottom-8 -right-8 transform -rotate-3">
+                                <div class="text-center">
+                                    <div class="text-6xl font-bold text-gradient mb-4">250+</div>
+                                    <p class="text-xl font-semibold">Projects Completed</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl font-bold text-center mb-4">Get In <span class="text-gradient">Touch</span></h2>
+                <p class="text-gray-300 text-center mb-12 max-w-2xl mx-auto">
+                    Ready to transform your business? Let's discuss your project
+                </p>
+                
+                <div class="max-w-4xl mx-auto">
+                    <div class="glass-effect rounded-xl p-8">
+                        <!-- Status Messages -->
+                        <div id="formMessage" class="mb-6 hidden p-4 rounded-lg"></div>
+                        
+                        <form id="contactForm" class="space-y-6" novalidate>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block mb-2" for="name">Name <span class="text-red-400">*</span></label>
+                                    <input type="text" id="name" name="name" required class="w-full bg-dark/50 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-accent transition-colors" placeholder="Your name">
+                                    <span class="error-msg hidden text-red-400 text-sm mt-1"></span>
+                                </div>
+                                <div>
+                                    <label class="block mb-2" for="email">Email <span class="text-red-400">*</span></label>
+                                    <input type="email" id="email" name="email" required class="w-full bg-dark/50 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-accent transition-colors" placeholder="your@email.com">
+                                    <span class="error-msg hidden text-red-400 text-sm mt-1"></span>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block mb-2" for="phone">Phone (Optional)</label>
+                                <input type="tel" id="phone" name="phone" class="w-full bg-dark/50 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-accent transition-colors" placeholder="+1 (555) 000-0000">
+                            </div>
+                            <div>
+                                <label class="block mb-2" for="service">Service Interest <span class="text-red-400">*</span></label>
+                                <select id="service" name="service" required class="w-full bg-dark/50 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-accent transition-colors">
+                                    <option value="">Select a service</option>
+                                    <option value="software">Software Development</option>
+                                    <option value="automation">Automation</option>
+                                    <option value="web">Web Development</option>
+                                    <option value="all">All Services</option>
+                                </select>
+                                <span class="error-msg hidden text-red-400 text-sm mt-1"></span>
+                            </div>
+                            <div>
+                                <label class="block mb-2" for="message">Message <span class="text-red-400">*</span></label>
+                                <textarea id="message" name="message" rows="5" required minlength="10" class="w-full bg-dark/50 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-accent transition-colors" placeholder="Tell us about your project..."></textarea>
+                                <span class="error-msg hidden text-red-400 text-sm mt-1"></span>
+                            </div>
+                            <!-- Honeypot field (spam protection) -->
+                            <input type="text" name="website" style="display:none;" tabindex="-1" autocomplete="off">
+                            <button type="submit" id="submitBtn" class="w-full bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary text-white font-semibold py-3 rounded-lg transition-all duration-300 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed">
+                                <span id="submitText">Send Message</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark/50 py-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-8 md:mb-0">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-r from-accent to-primary rounded-lg flex items-center justify-center transform rotate-45">
+                            <span class="transform -rotate-45 font-bold text-xl">N</span>
+                        </div>
+                        <span class="text-2xl font-bold">Nexus<span class="text-gradient">Tech</span></span>
+                    </div>
+                    <p class="text-gray-400">Transforming businesses through innovative technology</p>
+                </div>
+                
+                <div class="flex space-x-6">
+                    <a href="#" class="w-10 h-10 glass-effect rounded-full flex items-center justify-center hover:bg-accent transition-colors">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 glass-effect rounded-full flex items-center justify-center hover:bg-accent transition-colors">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 glass-effect rounded-full flex items-center justify-center hover:bg-accent transition-colors">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 glass-effect rounded-full flex items-center justify-center hover:bg-accent transition-colors">
+                        <i class="fab fa-dribbble"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 NexusTech. All rights reserved. | <a href="#" class="hover:text-accent transition-colors">Privacy Policy</a> | <a href="#" class="hover:text-accent transition-colors">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Three.js 3D Background
+        function initThreeJS() {
+            const container = document.getElementById('threejs-container');
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            container.appendChild(renderer.domElement);
+            
+            // Create floating geometry
+            const geometries = [
+                new THREE.TetrahedronGeometry(1, 0),
+                new THREE.OctahedronGeometry(1, 0),
+                new THREE.IcosahedronGeometry(1, 0)
+            ];
+            
+            const materials = [
+                new THREE.MeshBasicMaterial({ color: 0x2563eb, transparent: true, opacity: 0.1 }),
+                new THREE.MeshBasicMaterial({ color: 0x7c3aed, transparent: true, opacity: 0.1 }),
+                new THREE.MeshBasicMaterial({ color: 0x06b6d4, transparent: true, opacity: 0.1 })
+            ];
+            
+            const meshes = [];
+            
+            // Create multiple floating objects
+            for (let i = 0; i < 15; i++) {
+                const geometry = geometries[Math.floor(Math.random() * geometries.length)];
+                const material = materials[Math.floor(Math.random() * materials.length)];
+                const mesh = new THREE.Mesh(geometry, material);
+                
+                mesh.position.x = (Math.random() - 0.5) * 20;
+                mesh.position.y = (Math.random() - 0.5) * 20;
+                mesh.position.z = (Math.random() - 0.5) * 20;
+                
+                mesh.scale.setScalar(Math.random() * 0.5 + 0.5);
+                
+                mesh.userData = {
+                    speed: Math.random() * 0.02 + 0.01,
+                    rotationSpeed: Math.random() * 0.02 + 0.01
+                };
+                
+                scene.add(mesh);
+                meshes.push(mesh);
+            }
+            
+            camera.position.z = 5;
+            
+            // Animation loop
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                meshes.forEach(mesh => {
+                    mesh.rotation.x += mesh.userData.rotationSpeed;
+                    mesh.rotation.y += mesh.userData.rotationSpeed;
+                    
+                    // Float up and down
+                    mesh.position.y += Math.sin(Date.now() * 0.001 + mesh.position.x) * 0.01;
+                    
+                    // Slow rotation around center
+                    const time = Date.now() * 0.001;
+                    mesh.position.x += Math.cos(time + mesh.position.y) * 0.01;
+                    mesh.position.z += Math.sin(time + mesh.position.x) * 0.01;
+                });
+                
+                renderer.render(scene, camera);
+            }
+            
+            animate();
+            
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+        
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Form validation and submission
+        const contactForm = document.getElementById('contactForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const formMessage = document.getElementById('formMessage');
+        
+        function showMessage(msg, isSuccess = true) {
+            formMessage.textContent = msg;
+            formMessage.className = `mb-6 p-4 rounded-lg ${
+                isSuccess 
+                  ? 'bg-green-500/20 border border-green-500/30 text-green-300' 
+                  : 'bg-red-500/20 border border-red-500/30 text-red-300'
+            }`;
+            formMessage.classList.remove('hidden');
+        }
+        
+        function clearErrors() {
+            document.querySelectorAll('.error-msg').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('input, select, textarea').forEach(el => el.classList.remove('border-red-500'));
+        }
+        
+        function validateForm(form) {
+            clearErrors();
+            let isValid = true;
+            
+            const name = form.querySelector('#name');
+            if (!name.value.trim()) {
+                name.classList.add('border-red-500');
+                name.parentElement.querySelector('.error-msg').textContent = 'Name is required';
+                name.parentElement.querySelector('.error-msg').classList.remove('hidden');
+                isValid = false;
+            }
+            
+            const email = form.querySelector('#email');
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!email.value.trim() || !emailRegex.test(email.value)) {
+                email.classList.add('border-red-500');
+                email.parentElement.querySelector('.error-msg').textContent = 'Valid email is required';
+                email.parentElement.querySelector('.error-msg').classList.remove('hidden');
+                isValid = false;
+            }
+            
+            const service = form.querySelector('#service');
+            if (!service.value) {
+                service.classList.add('border-red-500');
+                service.parentElement.querySelector('.error-msg').textContent = 'Please select a service';
+                service.parentElement.querySelector('.error-msg').classList.remove('hidden');
+                isValid = false;
+            }
+            
+            const message = form.querySelector('#message');
+            if (!message.value.trim() || message.value.trim().length < 10) {
+                message.classList.add('border-red-500');
+                message.parentElement.querySelector('.error-msg').textContent = 'Message must be at least 10 characters';
+                message.parentElement.querySelector('.error-msg').classList.remove('hidden');
+                isValid = false;
+            }
+            
+            // Check honeypot
+            if (form.querySelector('[name="website"]').value) {
+                isValid = false; // Silently fail spam attempts
+            }
+            
+            return isValid;
+        }
+        
+        contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            if (!validateForm(this)) {
+                showMessage('Please fix the errors above.', false);
+                return;
+            }
+            
+            // Disable submit button to prevent double submission
+            submitBtn.disabled = true;
+            submitBtn.querySelector('#submitText').textContent = 'Sending...';
+            formMessage.classList.add('hidden');
+            
+            try {
+                // Get reCAPTCHA token
+                const recaptchaToken = await grecaptcha.execute('6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI', {action: 'submit'});
+                
+                // Send form with reCAPTCHA token
+                const response = await fetch('/.netlify/functions/contact', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name: this.querySelector('#name').value.trim(),
+                        email: this.querySelector('#email').value.trim(),
+                        phone: this.querySelector('#phone').value.trim(),
+                        service: this.querySelector('#service').value,
+                        message: this.querySelector('#message').value.trim(),
+                        recaptchaToken: recaptchaToken
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showMessage('Thank you! Your message has been sent. We will get back to you soon.', true);
+                    this.reset();
+                    clearErrors();
+                } else {
+                    showMessage(data.error || 'Error sending message. Please try again.', false);
+                }
+            } catch (error) {
+                console.error('Form submission error:', error);
+                showMessage('Error sending message. Please try again later.', false);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.querySelector('#submitText').textContent = 'Send Message';
+            }
+        });
+        
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            initThreeJS();
+            
+            // Add scroll animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-fade-in');
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe all sections
+            document.querySelectorAll('section').forEach(section => {
+                observer.observe(section);
+            });
+        });
+        
+        // Add CSS for fade-in animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fade-in {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            .animate-fade-in {
+                animation: fade-in 0.6s ease-out forwards;
+            }
+            section {
+                opacity: 0;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
