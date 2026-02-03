@@ -594,8 +594,9 @@
             
             try {
                 // Get reCAPTCHA token
-                const recaptchaToken = await grecaptcha.execute('6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI', {action: 'submit'});
-                
+                // const recaptchaToken = await grecaptcha.execute('6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI', {action: 'submit'});
+                const recaptchaToken = 'await grecaptcha.execute("6LfNUV8sAAAAADME39_-4EzIQi3oTRvTarVLKj9X", {action: "submit"})';
+
                 // Send form with reCAPTCHA token
                 const response = await fetch('/.netlify/functions/contact', {
                     method: 'POST',
@@ -677,4 +678,5 @@
 </body>
 
 </html>
+
 
