@@ -5,15 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>NexusTech | Software Development & Automation Solutions</title>
+    <title>KamTech Holding | Software Development & Automation Solutions</title>
     
     <meta name="description" content="Professional software development, automation, and web development services with cutting-edge 3D technology solutions">
     <meta name="keywords" content="software development, automation, web development, 3D solutions, custom software">
+    <meta name="theme-color" content="#0f172a">
+    <!-- <link rel="icon" href="/favicon.svg" type="image/svg+xml"> -->
+    <link rel="manifest" href="/manifest.json">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" async defer></script>
     <script>
         tailwind.config = {
             theme: {
@@ -64,6 +68,11 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
+        input:invalid:not(:placeholder-shown),
+        select:invalid:not(:placeholder-shown),
+        textarea:invalid:not(:placeholder-shown) {
+            border-color: #ef4444;
+        }
     </style>
 </head>
 <body class="min-h-screen gradient-bg text-white overflow-x-hidden">
@@ -76,9 +85,9 @@
             <div class="flex justify-between items-center">
                 <div class="flex items-center space-x-2">
                     <div class="w-10 h-10 bg-gradient-to-r from-accent to-primary rounded-lg flex items-center justify-center transform rotate-45">
-                        <span class="transform -rotate-45 font-bold text-xl">N</span>
+                        <span class="transform -rotate-45 font-bold text-xl"><a href="index.html" style="text-decoration: none;" >K</a></span>
                     </div>
-                    <span class="text-2xl font-bold">Nexus<span class="text-gradient">Tech</span></span>
+                    <span class="text-2xl font-bold"><a href="index.html" style="text-decoration: none;" >Kam<span class="text-gradient">Tech</span></a></span>
                 </div>
                 
                 <div class="hidden md:flex space-x-8">
@@ -89,8 +98,8 @@
                     <a href="#contact" class="hover:text-accent transition-colors duration-300">Contact</a>
                 </div>
                 
-                <button class="bg-primary hover:bg-accent px-6 py-2 rounded-lg transition-all duration-300 transform hover:scale-105">
-                    Get Started
+                <button class="bg-primary hover:bg-accent px-6 py-2 rounded-lg transition-all duration-300 transform hover:scale-105" id="#contact">
+                    <a href="#contact" style="text-decoration: none;">Get Started</a>
                 </button>
             </div>
         </nav>
@@ -110,10 +119,10 @@
                     </p>
                     <div class="flex space-x-4">
                         <button class="bg-primary hover:bg-accent px-8 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-primary/30">
-                            Start Project
+                            <a href="#contact">Start Project</a>
                         </button>
-                        <button class="glass-effect hover:bg-white/20 px-8 py-3 rounded-lg font-semibold transition-all duration-300">
-                            View Portfolio
+                        <button class="glass-effect hover:bg-white/20 px-8 py-3 rounded-lg font-semibold transition-all duration-300" >                            
+                            <a href="#portfolio">View Portfolio</a>
                         </button>
                     </div>
                 </div>
@@ -212,7 +221,7 @@
                     <div class="glass-effect rounded-xl overflow-hidden transform hover:scale-[1.02] transition-all duration-500">
                         <div class="relative h-64 overflow-hidden">
                             <img 
-                                src="https://picsum.photos/800/400?random=1" 
+                                src="images/InShot_20260127_121835634.jpg" 
                                 alt="Enterprise Automation Dashboard" 
                                 class="w-full h-full object-cover"
                                 loading="lazy"
@@ -234,7 +243,7 @@
                     <div class="glass-effect rounded-xl overflow-hidden transform hover:scale-[1.02] transition-all duration-500">
                         <div class="relative h-64 overflow-hidden">
                             <img 
-                                src="https://picsum.photos/800/400?random=2" 
+                                src="images/94201fa9-d670-4863-ba54-b532863d49a3.jpeg" 
                                 alt="3D E-commerce Platform" 
                                 class="w-full h-full object-cover"
                                 loading="lazy"
@@ -325,33 +334,46 @@
                 
                 <div class="max-w-4xl mx-auto">
                     <div class="glass-effect rounded-xl p-8">
-                        <form id="contactForm" class="space-y-6">
+                        <!-- Status Messages -->
+                        <div id="formMessage" class="mb-6 hidden p-4 rounded-lg"></div>
+                        
+                        <form id="contactForm" class="space-y-6" novalidate>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
-                                    <label class="block mb-2">Name</label>
-                                    <input type="text" class="w-full bg-dark/50 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-accent transition-colors" placeholder="Your name">
+                                    <label class="block mb-2" for="name">Name <span class="text-red-400">*</span></label>
+                                    <input type="text" id="name" name="name" required class="w-full bg-dark/50 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-accent transition-colors" placeholder="Your name">
+                                    <span class="error-msg hidden text-red-400 text-sm mt-1"></span>
                                 </div>
                                 <div>
-                                    <label class="block mb-2">Email</label>
-                                    <input type="email" class="w-full bg-dark/50 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-accent transition-colors" placeholder="your@email.com">
+                                    <label class="block mb-2" for="email">Email <span class="text-red-400">*</span></label>
+                                    <input type="email" id="email" name="email" required class="w-full bg-dark/50 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-accent transition-colors" placeholder="your@email.com">
+                                    <span class="error-msg hidden text-red-400 text-sm mt-1"></span>
                                 </div>
                             </div>
                             <div>
-                                <label class="block mb-2">Service Interest</label>
-                                <select class="w-full bg-dark/50 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-accent transition-colors">
+                                <label class="block mb-2" for="phone">Phone (Optional)</label>
+                                <input type="tel" id="phone" name="phone" class="w-full bg-dark/50 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-accent transition-colors" placeholder="+27 (78) 123-4567">
+                            </div>
+                            <div>
+                                <label class="block mb-2" for="service">Service Interest <span class="text-red-400">*</span></label>
+                                <select id="service" name="service" required class="w-full bg-dark/50 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-accent transition-colors">
                                     <option value="">Select a service</option>
                                     <option value="software">Software Development</option>
                                     <option value="automation">Automation</option>
                                     <option value="web">Web Development</option>
                                     <option value="all">All Services</option>
                                 </select>
+                                <span class="error-msg hidden text-red-400 text-sm mt-1"></span>
                             </div>
                             <div>
-                                <label class="block mb-2">Message</label>
-                                <textarea rows="5" class="w-full bg-dark/50 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-accent transition-colors" placeholder="Tell us about your project..."></textarea>
+                                <label class="block mb-2" for="message">Message <span class="text-red-400">*</span></label>
+                                <textarea id="message" name="message" rows="5" required minlength="10" class="w-full bg-dark/50 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-accent transition-colors" placeholder="Tell us about your project..."></textarea>
+                                <span class="error-msg hidden text-red-400 text-sm mt-1"></span>
                             </div>
-                            <button type="submit" class="w-full bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary text-white font-semibold py-3 rounded-lg transition-all duration-300 transform hover:scale-[1.02]">
-                                Send Message
+                            <!-- Honeypot field (spam protection) -->
+                            <input type="text" name="website" style="display:none;" tabindex="-1" autocomplete="off">
+                            <button type="submit" id="submitBtn" class="w-full bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary text-white font-semibold py-3 rounded-lg transition-all duration-300 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed">
+                                <span id="submitText">Send Message</span>
                             </button>
                         </form>
                     </div>
@@ -367,14 +389,14 @@
                 <div class="mb-8 md:mb-0">
                     <div class="flex items-center space-x-2 mb-4">
                         <div class="w-10 h-10 bg-gradient-to-r from-accent to-primary rounded-lg flex items-center justify-center transform rotate-45">
-                            <span class="transform -rotate-45 font-bold text-xl">N</span>
+                            <span class="transform -rotate-45 font-bold text-xl"> <a href="index.html" style="text-decoration: none;" >K</a></span>
                         </div>
-                        <span class="text-2xl font-bold">Nexus<span class="text-gradient">Tech</span></span>
+                        <span class="text-2xl font-bold"><a href="index.html" style="text-decoration: none;" >Kam<span class="text-gradient">Tech</span></a></span>
                     </div>
                     <p class="text-gray-400">Transforming businesses through innovative technology</p>
                 </div>
                 
-                <div class="flex space-x-6">
+                <!-- <div class="flex space-x-6">
                     <a href="#" class="w-10 h-10 glass-effect rounded-full flex items-center justify-center hover:bg-accent transition-colors">
                         <i class="fab fa-twitter"></i>
                     </a>
@@ -387,11 +409,11 @@
                     <a href="#" class="w-10 h-10 glass-effect rounded-full flex items-center justify-center hover:bg-accent transition-colors">
                         <i class="fab fa-dribbble"></i>
                     </a>
-                </div>
+                </div> -->
             </div>
             
             <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-                <p>&copy; 2024 NexusTech. All rights reserved. | <a href="#" class="hover:text-accent transition-colors">Privacy Policy</a> | <a href="#" class="hover:text-accent transition-colors">Terms of Service</a></p>
+                <p>&copy; 2022 KamTech Holdings. All rights reserved. | <a href="#" class="hover:text-accent transition-colors">Privacy Policy</a> | <a href="#" class="hover:text-accent transition-colors">Terms of Service</a></p>
             </div>
         </div>
     </footer>
@@ -492,11 +514,119 @@
             });
         });
         
-        // Form submission
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
+        // Form validation and submission
+        const contactForm = document.getElementById('contactForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const formMessage = document.getElementById('formMessage');
+        
+        function showMessage(msg, isSuccess = true) {
+            formMessage.textContent = msg;
+            formMessage.className = `mb-6 p-4 rounded-lg ${
+                isSuccess 
+                  ? 'bg-green-500/20 border border-green-500/30 text-green-300' 
+                  : 'bg-red-500/20 border border-red-500/30 text-red-300'
+            }`;
+            formMessage.classList.remove('hidden');
+        }
+        
+        function clearErrors() {
+            document.querySelectorAll('.error-msg').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('input, select, textarea').forEach(el => el.classList.remove('border-red-500'));
+        }
+        
+        function validateForm(form) {
+            clearErrors();
+            let isValid = true;
+            
+            const name = form.querySelector('#name');
+            if (!name.value.trim()) {
+                name.classList.add('border-red-500');
+                name.parentElement.querySelector('.error-msg').textContent = 'Name is required';
+                name.parentElement.querySelector('.error-msg').classList.remove('hidden');
+                isValid = false;
+            }
+            
+            const email = form.querySelector('#email');
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!email.value.trim() || !emailRegex.test(email.value)) {
+                email.classList.add('border-red-500');
+                email.parentElement.querySelector('.error-msg').textContent = 'Valid email is required';
+                email.parentElement.querySelector('.error-msg').classList.remove('hidden');
+                isValid = false;
+            }
+            
+            const service = form.querySelector('#service');
+            if (!service.value) {
+                service.classList.add('border-red-500');
+                service.parentElement.querySelector('.error-msg').textContent = 'Please select a service';
+                service.parentElement.querySelector('.error-msg').classList.remove('hidden');
+                isValid = false;
+            }
+            
+            const message = form.querySelector('#message');
+            if (!message.value.trim() || message.value.trim().length < 10) {
+                message.classList.add('border-red-500');
+                message.parentElement.querySelector('.error-msg').textContent = 'Message must be at least 10 characters';
+                message.parentElement.querySelector('.error-msg').classList.remove('hidden');
+                isValid = false;
+            }
+            
+            // Check honeypot
+            if (form.querySelector('[name="website"]').value) {
+                isValid = false; // Silently fail spam attempts
+            }
+            
+            return isValid;
+        }
+        
+        contactForm.addEventListener('submit', async function(e) {
             e.preventDefault();
-            alert('Thank you for your message! We will get back to you soon.');
-            this.reset();
+            
+            if (!validateForm(this)) {
+                showMessage('Please fix the errors above.', false);
+                return;
+            }
+            
+            // Disable submit button to prevent double submission
+            submitBtn.disabled = true;
+            submitBtn.querySelector('#submitText').textContent = 'Sending...';
+            formMessage.classList.add('hidden');
+            
+            try {
+                // Get reCAPTCHA token
+                // const recaptchaToken = await grecaptcha.execute('6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI', {action: 'submit'});
+                const recaptchaToken = 'await grecaptcha.execute("6LfNUV8sAAAAADME39_-4EzIQi3oTRvTarVLKj9X", {action: "submit"})';
+
+                // Send form with reCAPTCHA token
+                const response = await fetch('/.netlify/functions/contact', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name: this.querySelector('#name').value.trim(),
+                        email: this.querySelector('#email').value.trim(),
+                        phone: this.querySelector('#phone').value.trim(),
+                        service: this.querySelector('#service').value,
+                        message: this.querySelector('#message').value.trim(),
+                        recaptchaToken: recaptchaToken
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showMessage('Thank you! Your message has been sent. We will get back to you soon.', true);
+                    this.reset();
+                    clearErrors();
+                } else {
+                    showMessage(data.error || 'Error sending message. Please try again.', false);
+                }
+            } catch (error) {
+                console.error('Form submission error:', error);
+                showMessage('Error sending message. Please try again later.', false);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.querySelector('#submitText').textContent = 'Send Message';
+            }
         });
         
         // Initialize when page loads
